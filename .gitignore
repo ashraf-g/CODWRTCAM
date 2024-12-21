@@ -3,7 +3,7 @@
 /server/node_modules/
 
 # Ignore .env file in the server/config directory
-/server/config/.env
+/server/src/config/.env
 
 # Ignore test files in the server/
 /server/test/.

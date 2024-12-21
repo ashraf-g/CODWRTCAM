@@ -34,7 +34,8 @@ app.get("/", (req, res) => {
 });
 
 //use routes
-// require("./src/routes/userRoute")(app);
+require("./src/routes/user.route")(app);
+require("./src/routes/project.route")(app);
 
 //listen server
 app.listen(PORT, () => {
