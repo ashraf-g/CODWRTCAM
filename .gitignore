@@ -1,0 +1,16 @@
+# Ignore node_modules in both client and server directories
+/client/node_modules/
+/server/node_modules/
+
+# Ignore .env file in the server/config directory
+/server/config/.env
+
+# Ignore test files in the server/
+/server/test/.
+
+# Ignore jest files in the server/
+/server/jest.config.js 
+
+# Ignore build files in the client/
+/client/build
+
