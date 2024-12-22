@@ -25,6 +25,31 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    otpExpiry: {
+      type: Date,
+      default: null,
+    },
+    profile_image: {
+      type: String,
+      default: null,
+    },
+    role: {
+      type: String,
+      enum: ["admin", "moderator", "user"],
+      default: "user",
+    },
+    last_login: {
+      type: Date,
+      default: null,
+    },
+    verificationToken: {
+      type: String,
+      default: null,
+    },
+    verificationExpiry: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );

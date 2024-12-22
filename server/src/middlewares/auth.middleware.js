@@ -1,28 +1,28 @@
 const jwt = require("jsonwebtoken");
 
 require("dotenv").config({ path: "../config/.env" });
-const jwtConfig = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const isAuthenticated = (req, res, next) => {
   // Extract token from headers
-  const authHeader = req.header("authorization");
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Login required" });
+  if (!token) {
+    return res.status(401).json({ message: "No token, authorization denied" });
   }
 
-  // Get the token from the Authorization header
-  const token = authHeader.split(" ")[1];
-  // console.log(token);
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    // console.log(decoded);
 
-  // Verify the token
-  jwt.verify(token, jwtConfig, async (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid or expired token" });
-    }
-    req.user = decoded; // Attach user data to the request
-    next(); // Proceed to the next middleware or route handler
-  });
+    // Step 3: Attach the user data (e.g., userId) to the request object
+    req.userId = decoded.userId; // Assuming the token contains the userId as "id"
+
+    // Call the next middleware or route handler
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Token is not valid" });
+  }
 };
 
 module.exports = isAuthenticated;

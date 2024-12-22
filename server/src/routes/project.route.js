@@ -1,5 +1,6 @@
 module.exports = (app) => {
-  const { base_URL } = require("../config/baseURL");
+  require("dotenv").config({ path: "../config/.env" });
+  const base_URL = process.env.BASE_URL;
   const routes = require("express").Router();
 
   const project = require("../controllers/project.controller");
