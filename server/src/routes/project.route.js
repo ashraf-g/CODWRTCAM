@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  require("dotenv").config({ path: "../config/.env" });
+  require("dotenv").config();
   const base_URL = process.env.BASE_URL;
   const routes = require("express").Router();
 
@@ -16,6 +16,7 @@ module.exports = (app) => {
   routes.get("/project/getById/:id", project.getProjectById);
   routes.put("/project/update/:id", project.updateProject);
   routes.delete("/project/delete/:id", project.deleteProject);
+  routes.get("/project/getArchive", project.getArchiveProject);
 
   app.use(isAuthenticated);
   app.use(base_URL, routes);

@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-require("dotenv").config({ path: "./src/config/.env" });
+require("dotenv").config();
 const PORT = process.env.PORT;
 
 const dbConnect = require("./src/config/db.connect");
@@ -34,8 +34,12 @@ app.get("/", (req, res) => {
 });
 
 //use routes
-require("./src/routes/user.route")(app);
+require("./src/routes/auth.route")(app);
 require("./src/routes/project.route")(app);
+require("./src/routes/file.route")(app);
+require("./src/routes/flagged.route")(app);
+require("./src/routes/collaborator.route")(app);
+require("./src/routes/message.route")(app);
 
 //listen server
 app.listen(PORT, () => {

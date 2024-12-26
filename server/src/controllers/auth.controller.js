@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("../models/auth.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -10,6 +10,7 @@ const {
 const generateOTP = require("../utils/generateOTP");
 const upload = require("../utils/multerConfig");
 const cloudinary = require("../utils/cloudinary");
+const sendErrorResponse = require("../helpers/responseHelper");
 
 require("dotenv").config({ path: "../config/.env" });
 const jwtConfig = process.env.JWT_SECRET;
@@ -34,7 +35,6 @@ exports.signUp = [
 
       const { username, email, password } = req.body;
 
-      // Check if the user or email already exists in a more efficient way
       const existingUser = await User.findOne({
         $or: [{ username }, { email }],
       });
@@ -72,7 +72,7 @@ exports.signUp = [
       res.status(201).json({ message: "User created successfully" });
     } catch (error) {
       console.error("Error in sign up:", error);
-      res.status(500).json({ message: "Server error" });
+      sendErrorResponse(res, 500, "Server error");
     }
   },
 ];
@@ -130,9 +130,7 @@ exports.login = [
       });
     } catch (error) {
       console.error("Error during login:", error);
-      res
-        .status(500)
-        .json({ message: "Server error. Please try again later." });
+      sendErrorResponse(res, 500, "Server error");
     }
   },
 ];
@@ -172,10 +170,7 @@ exports.verifyEmail = async (req, res) => {
     });
   } catch (error) {
     console.error("Error during email verification:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error. Please try again later.",
-    });
+    sendErrorResponse(res, 500, "Server error");
   }
 };
 
@@ -222,10 +217,7 @@ exports.forgotPassword = [
       });
     } catch (error) {
       console.error("Error during forgot password request:", error);
-      res.status(500).json({
-        success: false,
-        message: "Server error. Please try again later.",
-      });
+      sendErrorResponse(res, 500, "Server error");
     }
   },
 ];
@@ -278,10 +270,7 @@ exports.resetPassword = async (req, res) => {
     });
   } catch (error) {
     console.error("Error during password reset:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error. Please try again later.",
-    });
+    sendErrorResponse(res, 500, "Server error");
   }
 };
 
@@ -335,9 +324,7 @@ exports.updateProfile = [
       });
     } catch (error) {
       console.error("Error updating profile:", error);
-      res
-        .status(500)
-        .json({ message: "Server error. Please try again later." });
+      sendErrorResponse(res, 500, "Server error");
     }
   },
 ];

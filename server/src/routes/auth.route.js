@@ -1,11 +1,11 @@
 module.exports = (app) => {
-  require("dotenv").config({ path: "../config/.env" });
+  require("dotenv").config();
   const base_URL = process.env.BASE_URL;
 
   const routes = require("express").Router();
   const isAuthenticated = require("../middlewares/auth.middleware");
 
-  const user = require("../controllers/user.controller");
+  const user = require("../controllers/auth.controller");
 
   routes.post("/user/auth/signup", user.signUp);
   routes.post("/user/auth/login", user.login);
